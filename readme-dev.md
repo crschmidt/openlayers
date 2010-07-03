@@ -8,16 +8,22 @@ interested in contributing to the future of OpenLayers, please fork the
 contributions and appreciate the help!
 
 This document doesn't cover the git basics. The [help pages][2] on GitHub are a
-good place to start learning git.
+good place to start learning git.  In particular, the document on [forking][3]
+is a particularly good read for those who wish to contribute to the project but
+don't have commit rights on the central repository.  The rest of this document
+pertains to changes made by developers with access to the central repository
+(but those folks are encouraged to use their own forks for pushing changes as
+well).
 
 There two types of changes developers will be making to the central OpenLayers
 repository. The first type will be commits that add features toward the
 OpenLayers v3 API or remove parts of the v2 API. The second type of change
-will be merges that come from the remote [OpenLayers subversion][3] repository.
+will be merges that come from the remote [OpenLayers subversion][4] repository.
 
 [1]: http://github.com/openlayers/openlayers
 [2]: http://help.github.com/
-[3]: http://svn.openlayers.org/trunk/openlayers
+[3]: http://help.github.com/forking/
+[4]: http://svn.openlayers.org/trunk/openlayers
 
 
 ## Pushing Commits to the Central Repository
@@ -91,7 +97,7 @@ You should see something like what you'd expect from `svn info` inside a
 working copy of a subversion repository.  The first time you run it, you'll get
 a lot of extra output about rebuilding the revision map.
 
-### Fetching changes from svn
+### Fetching and merging changes from svn
 
 As mentioned above, you can fetch changes into any of your git branches, but
 by convention, we only apply changes from the subversion repository to the 2.x
@@ -110,6 +116,16 @@ always fetch changes from the remote subversion repository.  Run the following
 to fetch changes and apply them as commits to your 2.x branch.
 
     git svn fetch
+    git merge git-svn
+
+The merge won't do anything if there weren't any new changes from svn (so there 
+is no need to run it if you don't see changes come in from the fetch).  If there
+were commits to merge, you'll see that your 2.x branch is ahead of origin/2.x by
+so many commits (`git status` should report something like "Your branch is ahead
+of 'origin/2.x' by 2 commits.")  As with any branch, you can see a log of those
+commits by with `git log`.  For example `git log origin/2.x..HEAD` lists the 
+commits between my local HEAD and the last commit I have from origin/2.x (the
+central 2.x branch).
 
 At this point, you can push the commits from your local 2.x branch (the changes 
 that came from svn) to the central git repo:
